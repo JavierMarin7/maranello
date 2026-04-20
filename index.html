@@ -2,29 +2,112 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Maranello · Tablero financiero</title>
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Maranello · Tablero financiero</h1>
-      <p class="muted">Base inicial del repositorio. El siguiente paso será conectar este HTML con los CSV publicados en <code>data/</code>.</p>
+      <div>
+        <h1>Maranello · Tablero financiero</h1>
+        <p class="muted">Tablero gerencial alimentado desde archivos CSV publicados en GitHub.</p>
+      </div>
+      <div class="hero-right">
+        <label for="periodoSelect" class="label">Período</label>
+        <select id="periodoSelect"></select>
+        <button id="reloadBtn" class="btn">Actualizar</button>
+      </div>
     </header>
 
-    <main class="card">
-      <h2>Repositorio configurado</h2>
-      <p>La estructura inicial está lista.</p>
-      <ul>
-        <li>HTML principal creado</li>
-        <li>CSS base creado</li>
-        <li>JS base creado</li>
-        <li><code>periodos.json</code> creado</li>
-        <li>Carpeta <code>data/2025_11/</code> lista para recibir los CSV</li>
-      </ul>
-      <p class="muted">Cuando subas los CSV del periodo, continuamos con el tablero financiero dinámico.</p>
-    </main>
+    <section class="summary-bar">
+      <div class="summary-item"><span class="summary-label">Período seleccionado</span><strong id="selectedPeriod">-</strong></div>
+      <div class="summary-item"><span class="summary-label">Última carga</span><strong id="lastUpdate">-</strong></div>
+      <div class="summary-item"><span class="summary-label">Estado del proceso</span><strong id="processState">-</strong></div>
+    </section>
+
+    <section class="grid-kpis">
+      <article class="card kpi"><span class="kpi-label">Ventas facturadas</span><strong id="kpiVentas">$0</strong></article>
+      <article class="card kpi"><span class="kpi-label">Recaudo neto datáfono</span><strong id="kpiDatafono">$0</strong></article>
+      <article class="card kpi"><span class="kpi-label">Compras inventario</span><strong id="kpiInventario">$0</strong></article>
+      <article class="card kpi"><span class="kpi-label">Mermas valorizadas</span><strong id="kpiMermas">$0</strong></article>
+      <article class="card kpi"><span class="kpi-label">Gastos operativos</span><strong id="kpiGastos">$0</strong></article>
+      <article class="card kpi highlight"><span class="kpi-label">Resultado simple</span><strong id="kpiResultado">$0</strong></article>
+    </section>
+
+    <section class="grid-kpis grid-kpis-secondary">
+      <article class="card mini"><span class="kpi-label">Tickets ventas</span><strong id="kpiTickets">0</strong></article>
+      <article class="card mini"><span class="kpi-label">Tx datáfono</span><strong id="kpiTxDatafono">0</strong></article>
+      <article class="card mini"><span class="kpi-label">Registros OK</span><strong id="kpiOk">0</strong></article>
+      <article class="card mini warn"><span class="kpi-label">Por validar</span><strong id="kpiValidar">0</strong></article>
+      <article class="card mini danger"><span class="kpi-label">Inconsistentes</span><strong id="kpiIncons">0</strong></article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <div class="card-head"><h2>Composición financiera del período</h2></div>
+        <canvas id="chartComposicion"></canvas>
+      </article>
+      <article class="card">
+        <div class="card-head"><h2>Ventas vs recaudo neto</h2></div>
+        <canvas id="chartComparativo"></canvas>
+      </article>
+    </section>
+
+    <section class="grid-3">
+      <article class="card">
+        <div class="card-head"><h2>Ventas por sede</h2></div>
+        <canvas id="chartVentasSede"></canvas>
+      </article>
+      <article class="card">
+        <div class="card-head"><h2>Datafono por sede</h2></div>
+        <canvas id="chartDatafonoSede"></canvas>
+      </article>
+      <article class="card">
+        <div class="card-head"><h2>Gastos por clasificación</h2></div>
+        <canvas id="chartGastosCat"></canvas>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <div class="card-head"><h2>Top proveedores de gastos</h2></div>
+        <table id="tablaProveedoresGastos">
+          <thead><tr><th>Proveedor</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+      <article class="card">
+        <div class="card-head"><h2>Top proveedores de inventario</h2></div>
+        <table id="tablaProveedoresInv">
+          <thead><tr><th>Proveedor</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <div class="card-head"><h2>Alertas del período</h2></div>
+        <table id="tablaAlertas">
+          <thead><tr><th>Origen</th><th>Resumen</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+      <article class="card">
+        <div class="card-head"><h2>Resumen del proceso</h2></div>
+        <table id="tablaResumen">
+          <thead><tr><th>Master</th><th>Estado</th><th>Filas</th><th>Observación</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>Log de carga</h2></div>
+      <div id="statusLog" class="status-log muted">Esperando carga de período...</div>
+    </section>
   </div>
   <script src="assets/js/app.js"></script>
 </body>
