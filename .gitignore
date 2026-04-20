@@ -1,0 +1,11 @@
+# Archivos temporales
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Office temporales
+~$*.xlsx
+~$*.docx

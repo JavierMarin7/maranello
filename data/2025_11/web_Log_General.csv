@@ -1,0 +1,19 @@
+﻿momento,evento,detalle
+2026-04-20T11:23:45,INICIO,Inicio del procesamiento mensual para 2025_11_Noviembre.xlsx
+2026-04-20T11:23:51,EJECUCION_OK,"Ventas_Master: OK - archivo generado: G:\Mi unidad\MARANELLO\00_SISTEMA_FINANCIERO\02_Maestros\2025_11\Ventas_Master_2025_11.xlsx
+Hoja usada: Ventas
+Facturas consolidadas: 1414"
+2026-04-20T11:23:56,EJECUCION_OK,"Datafono_Master: OK - archivo generado: G:\Mi unidad\MARANELLO\00_SISTEMA_FINANCIERO\02_Maestros\2025_11\Datafono_Master_2025_11.xlsx
+BOLD usado: BOLD
+CREDIBANCO usado: CREDIBANCO
+Registros consolidados: 1689"
+2026-04-20T11:23:58,EJECUCION_OK,"Inventario_Master: OK - archivo generado: G:\Mi unidad\MARANELLO\00_SISTEMA_FINANCIERO\02_Maestros\2025_11\Inventario_Master_2025_11.xlsx
+Hoja usada: inventario
+Movimientos procesados: 180"
+2026-04-20T11:24:00,EJECUCION_OK,"Mermas_Master: OK - archivo generado: G:\Mi unidad\MARANELLO\00_SISTEMA_FINANCIERO\02_Maestros\2025_11\Mermas_Master_2025_11.xlsx
+Hoja usada: mermas
+Mermas procesadas: 10"
+2026-04-20T11:24:02,EJECUCION_OK,"Gastos_Master: OK - archivo generado: G:\Mi unidad\MARANELLO\00_SISTEMA_FINANCIERO\02_Maestros\2025_11\Gastos_Master_2025_11.xlsx
+Hoja usada: gastos
+Gastos procesados: 68"
+2026-04-20T11:24:02,FIN,Fin del procesamiento mensual para 2025_11_Noviembre.xlsx
